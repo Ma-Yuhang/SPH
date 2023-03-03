@@ -1,28 +1,27 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <Header></Header>
+    <router-view></router-view>
+    <!-- Footer组件在登录和注册页面不显示 -->
+    <Footer v-show="$route.meta.showFooter"></Footer>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Header, Footer
+  },
+  mounted() {
+    // 通知vuex发请求 在App根组件下数据只能执行一次 可以避免重复发送ajax请求
+    this.$store.dispatch('home/categoryList')
+
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+
